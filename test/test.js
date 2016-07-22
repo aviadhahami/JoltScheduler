@@ -5,5 +5,12 @@
 'use strict';
 let JoltScheduler = require('./index')
 
-let sc = new JoltScheduler();
-sc.run();
+class TestSuite{
+	
+	static run(){
+		console.log('running tests');
+	}
+	
+}
+
+TestSuite.run();
