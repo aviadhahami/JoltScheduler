@@ -1,0 +1,24 @@
+{
+  "name": "jolt-scheduler",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aviadhahami/JoltScheduler.git"
+  },
+  "keywords": [
+    "jolt",
+    "scheduler",
+    "js"
+  ],
+  "author": "Aviad Hahami",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aviadhahami/JoltScheduler/issues"
+  },
+  "homepage": "https://github.com/aviadhahami/JoltScheduler#readme"
+}
