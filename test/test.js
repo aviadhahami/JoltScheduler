@@ -3,12 +3,27 @@
  */
 
 'use strict';
-let JoltScheduler = require('./index')
+let chai = require('chai');
+let JoltScheduler = require('./../index')
+
+chai.should();
 
 class TestSuite{
 	
+	static testInit(){
+		describe('Test initialization', ()=>{
+			it('Private HashedMinHeap', ()=>{
+				let instance = new JoltScheduler();
+				'undefined'.should.equal(typeof instance.dataSet)
+			})
+		})
+	}
+	
 	static run(){
-		console.log('running tests');
+		describe('Test Suite',()=>{
+				this.testInit()
+			}
+		)
 	}
 	
 }

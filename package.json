@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "cd test && mocha"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/aviadhahami/JoltScheduler#readme",
   "dependencies": {
-    "min-heap": "^0.2.3",
+    "min-heap": "^0.2.3"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "chai": "^3.5.0",
     "mocha": "^2.5.3"
   }
 }
