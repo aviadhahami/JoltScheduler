@@ -5,7 +5,7 @@
 let HashedMinHeap = require('./hashed-min-heap');
 
 // ** PRIVATE MEMBERS DECELERATION **
-let dataSet
+let dataSet;
 
 class JoltScheduler{
 	
@@ -14,6 +14,12 @@ class JoltScheduler{
 		dataSet = new HashedMinHeap();
 	}
 	
+	get size(){
+		return dataSet.amountOfRecords
+	}
+	insert(item){
+		dataSet.insert(item)
+	}
 	
 }
 

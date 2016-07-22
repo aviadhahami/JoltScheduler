@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/aviadhahami/JoltScheduler#readme",
   "dependencies": {
-    "min-heap": "^0.2.3"
   },
   "devDependencies": {
     "babel": "^6.5.2",

@@ -10,6 +10,25 @@ chai.should();
 
 class TestSuite{
 	
+	static testInsertion() {
+		let instance;
+		beforeEach(() => {
+			// Create a new Rectangle object before every test.
+			instance = new JoltScheduler()
+		});
+		
+		describe('Test Insertion',()=>{
+			it('Size 0 on init', ()=>{
+				instance.size.should.equal(0)
+			});
+			
+			it('Size 1 after insertion',()=>{
+				instance.insert({name:'a',st:123,callback:()=>{}})
+				instance.size.should.equal(1)
+			})
+		})
+	}
+	
 	static testInit(){
 		describe('Test initialization', ()=>{
 			it('Private HashedMinHeap', ()=>{
@@ -21,16 +40,10 @@ class TestSuite{
 	
 	static run(){
 		describe('Test Suite',()=>{
-				this.testInit()
-				this.testInsertion()
+				this.testInit();
+				this.testInsertion();
 			}
 		)
-	}
-	
-	static testInsertion() {
-		describe('Test Insertion',()=>{
-			let instance = new JoltScheduler()
-		})
 	}
 }
 

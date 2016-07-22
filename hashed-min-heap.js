@@ -4,19 +4,9 @@
 
 'use strict'
 
-let MinHeap = require('min-heap');
+let MinHeap = require('./data-structures/min-heap');
 
 // Adding peek to the library...who the fuck doesn't implement peek?!
-MinHeap.prototype.peek ={
-	function(){
-		return this.heap[0];
-	}
-};
-MinHeap.prototype.getSize ={
-	function(){
-		return this.size;
-	}
-};
 
 class HashedMinHeap{
 	
@@ -34,7 +24,7 @@ class HashedMinHeap{
 	
 	// When inserting new entry, we inject the object unique id
 	// in a way we will couple the hash to the heap
-	set insert(entry) {
+	insert(entry) {
 		if(this.verifyShape(entry)){
 			// entry is of the proper form, need to generate id
 			let id = this.generateID(entry.st);
@@ -55,11 +45,11 @@ class HashedMinHeap{
 		return this.minHeap.peek()
 	}
 	
-	get heapSize(){
+	get amountOfRecords(){
 		return this.minHeap.getSize()
 	}
 	
-	set modifyEntry(entry) {
+	modifyEntry(entry) {
 		
 	}
 	
