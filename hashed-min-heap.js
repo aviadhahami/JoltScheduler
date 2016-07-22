@@ -6,6 +6,18 @@
 
 let MinHeap = require('min-heap');
 
+// Adding peek to the library...who the fuck doesn't implement peek?!
+MinHeap.prototype.peek ={
+	function(){
+		return this.heap[0];
+	}
+};
+MinHeap.prototype.getSize ={
+	function(){
+		return this.size;
+	}
+};
+
 class HashedMinHeap{
 	
 	constructor() {
@@ -24,23 +36,27 @@ class HashedMinHeap{
 	// in a way we will couple the hash to the heap
 	set insert(entry) {
 		if(this.verifyShape(entry)){
+			// entry is of the proper form, need to generate id
+			let id = this.generateID(entry.st);
 			
+			// Generate new object and inject id
+			let modifiedEntry = Object.assign({},entry,{_id:id})
+			
+			// Insert new entry to the hash (id : entry) and to the heap
+			this.hashTable[id] = modifiedEntry;
+			this.minHeap.insert(modifiedEntry)
 		}else{
 			throw 'Entry is not of proper form!'
 		}
 	}
 	
-	verifyShape(entry) {
-		return entry.hasOwnProperty('name') &&
-			typeof entry.name == 'string' &&
-			entry.hasOwnProperty('st') &&
-			typeof entry.st == 'number' &&
-			entry.hasOwnProperty('callback') &&
-			typeof entry.callback == 'function'
-	}
 	
 	get peek() {
-		
+		return this.minHeap.peek()
+	}
+	
+	get heapSize(){
+		return this.minHeap.getSize()
 	}
 	
 	set modifyEntry(entry) {
@@ -54,6 +70,15 @@ class HashedMinHeap{
 		// Convert it to base 36 (numbers + letters), and grab the first 7 characters
 		// after the decimal.
 		return '_' + Math.random().toString(36).substr(2, 7) + startingTime.toString();
+	}
+	
+	verifyShape(entry) {
+		return entry.hasOwnProperty('name') &&
+			typeof entry.name == 'string' &&
+			entry.hasOwnProperty('st') &&
+			typeof entry.st == 'number' &&
+			entry.hasOwnProperty('callback') &&
+			typeof entry.callback == 'function'
 	}
 }
 

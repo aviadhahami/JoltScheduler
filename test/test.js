@@ -22,10 +22,16 @@ class TestSuite{
 	static run(){
 		describe('Test Suite',()=>{
 				this.testInit()
+				this.testInsertion()
 			}
 		)
 	}
 	
+	static testInsertion() {
+		describe('Test Insertion',()=>{
+			let instance = new JoltScheduler()
+		})
+	}
 }
 
 TestSuite.run();
