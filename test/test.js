@@ -35,7 +35,32 @@ class TestSuite{
 			});
 		})
 	}
-	
+	static testExtraction(){
+		describe('test extraction',()=>{
+			let instance;
+			
+			beforeEach(() => {
+				// Create a new Rectangle object before every test.
+				instance = new JoltScheduler()
+			});
+			
+			it('Test id existance',()=>{
+				let temp = {name:'a',st:123,callback:()=>{}};
+				instance.insert(temp);
+				(typeof instance.pop()._id).should.equal('string')
+			})
+			it('Test extracted object equality',()=>{
+				let temp = {name:'a',st:123,callback:()=>{}};
+				instance.insert(temp)
+				let res = instance.pop()
+				temp.name.should.equal(res.name)
+				temp.st.should.equal(res.st)
+				temp.callback.should.equal(res.callback)
+			})
+			
+		})
+		
+	}
 	static testInit(){
 		describe('Test initialization', ()=>{
 			it('Private HashedMinHeap', ()=>{
@@ -49,6 +74,7 @@ class TestSuite{
 		describe('Test Suite',()=>{
 				this.testInit();
 				this.testInsertion();
+				this.testExtraction();
 			}
 		)
 	}

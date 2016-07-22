@@ -20,6 +20,11 @@ class HashedMinHeap{
 	
 	get pop() {
 		
+		let poped = this.minHeap.removeHead()
+		
+		// Clear hash entry
+		delete this.hashTable[poped._id]
+		return poped
 	}
 	
 	// When inserting new entry, we inject the object unique id

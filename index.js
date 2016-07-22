@@ -20,6 +20,9 @@ class JoltScheduler{
 	insert(item){
 		dataSet.insert(item)
 	}
+	pop(){
+		return dataSet.pop;
+	}
 	
 }
 
