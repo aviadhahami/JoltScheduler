@@ -25,7 +25,14 @@ class TestSuite{
 			it('Size 1 after insertion',()=>{
 				instance.insert({name:'a',st:123,callback:()=>{}})
 				instance.size.should.equal(1)
-			})
+			});
+			
+			it('Size 10 after insertions',()=>{
+				for(let i=0;i<10;i++){
+					instance.insert({name:'a'+i,st:i,callback:()=>{}})
+				}
+				instance.size.should.equal(10)
+			});
 		})
 	}
 	
