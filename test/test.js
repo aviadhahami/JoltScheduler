@@ -48,8 +48,9 @@ class TestSuite{
 				let temp = {name:'a',st:123,callback:()=>{}};
 				instance.insert(temp);
 				(typeof instance.pop()._id).should.equal('string')
-			})
-			it('Test extracted object equality',()=>{
+			});
+			
+			it('Test extracted object equality (emit id)',()=>{
 				let temp = {name:'a',st:123,callback:()=>{}};
 				instance.insert(temp)
 				let res = instance.pop()
