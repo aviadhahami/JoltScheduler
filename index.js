@@ -34,6 +34,7 @@ class JoltScheduler{
 			st: newEntry.st || null,
 			callback: newEntry.callback || null
 		};
+		console.log('passing to dataset');
 		dataSet.modifyEntry(id,sterilizedEntry);
 		this._updateInvoker();
 	}
@@ -43,20 +44,20 @@ class JoltScheduler{
 	
 	_updateInvoker() {
 		
+		console.log('peek', dataSet.peek);
 		// If we update but no tasks are present
 		if(dataSet.peek == null) return;
-		if (this.closestTask != dataSet.peek){
-			// Means that the DS is either empty or we've got earlier event
-			this.closestTask = dataSet.peek;
-			
-			// Stop previous timeout
-			if(timeoutHolder) {
-				clearTimeout(timeoutHolder);
-			}
-			
-			// Force new timeout
-			this._invoker();
-		}else return;
+		
+		// Means that the DS is either empty or we've got earlier event
+		this.closestTask = dataSet.peek;
+		
+		// Stop previous timeout
+		if(timeoutHolder) {
+			clearTimeout(timeoutHolder);
+		}
+		
+		// Force new timeout
+		this._invoker();
 	}
 	
 	_invoker() {
