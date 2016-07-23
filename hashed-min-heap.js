@@ -55,7 +55,7 @@ class HashedMinHeap{
 	}
 	
 	modifyEntry(entry) {
-		
+		// TODO: implement via heapify if needed
 	}
 	
 	generateID(startingTime) {
