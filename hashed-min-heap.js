@@ -61,6 +61,17 @@ class HashedMinHeap{
 		return !!this.hashTable.hasOwnProperty(id);
 	}
 	
+	remove(id) {
+		if (!this.contains(id)) {
+			throw 'Can\'t delete this entry as it doesn\'t exist'
+		}else{
+			let entry = this.hashTable[id];
+			this.minHeap.remove(entry);
+			delete this.hashTable[id];
+		}
+		
+	}
+	
 	modifyEntry(id,entry) {
 		
 		// If the st wasn't modified, we don't need to heapify

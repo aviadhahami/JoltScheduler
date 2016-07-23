@@ -37,8 +37,8 @@ class JoltScheduler{
 		dataSet.modifyEntry(id,sterilizedEntry);
 		this._updateInvoker();
 	}
-	deleteTask(id){
-		// Todo: implement this
+	remove(id){
+		return dataSet.remove(id);
 	}
 	
 	_updateInvoker() {
