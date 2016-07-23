@@ -111,22 +111,23 @@ class TestSuite{
 			
 			// Create delay of 3 sec
 			let time = new Date();
-			time.setSeconds(time.getSeconds() + 3);
+			time.setSeconds(time.getSeconds() + 1);
 			
 			// Set variable to test callback against
 			let toModify = null;
 			
 			// Callback will modify the var from null to {}
 			let callback = function(){
-				toModify = "1";
-				console.log('modified!');
+				toModify = true;
 			};
 			let task = {name:'task', st:time.getTime(), callback:callback};
 			instance.insert(task);
 			
-			// Test execution
-			"1".should.equal(toModify)
-			done() // Wait for timeout
+			setTimeout(function(){
+				// Test execution
+				true.should.equal(toModify);
+				done(); // Wait for timeout
+			},1005);
 		})
 	}
 	

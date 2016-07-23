@@ -24,7 +24,8 @@ class JoltScheduler{
 	}
 	
 	updateInvoker() {
-		if (this.closestTask =! dataSet.peek){
+		if(dataSet.peek == null) return;
+		if (this.closestTask != dataSet.peek){
 			// Means that the DS is either empty or we've got earlier event
 			this.closestTask = dataSet.peek;
 			
@@ -41,11 +42,12 @@ class JoltScheduler{
 	
 	invoker() {
 		
+		let that = this;
 		// on timeout, we invoke callback and pop the task from the dataset
 		let invocationCallback = function(){
-			dataSet.pop();
-			this.closestTask.callback();
-			this.updateInvoker()
+			dataSet.pop;
+			that.closestTask.callback();
+			that.updateInvoker()
 		};
 		
 		// Save timeout ID and count...
