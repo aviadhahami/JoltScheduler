@@ -97,9 +97,22 @@ class TestSuite{
 			})
 		})
 	}
+	static testModification() {
+		describe('Test Modification', ()=>{
+			let instance;
+			beforeEach(() => {
+				// Create a new Rectangle object before every test.
+				instance = new JoltScheduler()
+			});
+			it('Simple task modification (all data but time)',()=>{
+				
+			});
+			
+		})
+	}
+	
 	
 	// Execution tests
-	
 	static testStandardExecution() {
 		let instance;
 		beforeEach(() => {
@@ -237,7 +250,17 @@ class TestSuite{
 	}
 	
 	static testSpecialExecutions() {
-		
+		let instance;
+		beforeEach(() => {
+			// Create a new Rectangle object before every test.
+			instance = new JoltScheduler()
+		});
+		describe('Tasks modification execution',()=>{
+			// TODO: this
+		});
+		describe('insert task, insert sooner, modify origin to immidiate',()=>{
+			// TODO: this
+		})
 	}
 	
 	
@@ -246,6 +269,7 @@ class TestSuite{
 				this.testInit();
 				this.testInsertion();
 				this.testExtraction();
+				this.testModification();
 			}
 		);
 		describe('Execution Suite',()=>{
