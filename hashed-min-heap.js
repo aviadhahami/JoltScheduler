@@ -42,7 +42,7 @@ class HashedMinHeap{
 			
 			// Insert new entry to the hash (id : entry) and to the heap
 			this.hashTable[id] = modifiedEntry;
-			this.minHeap.insert(modifiedEntry)
+			this.minHeap.insert(modifiedEntry);
 			return id;
 		}else{
 			throw 'Entry is not of proper form!'
@@ -64,17 +64,23 @@ class HashedMinHeap{
 	modifyEntry(id,entry) {
 		
 		// If the st wasn't modified, we don't need to heapify
-		if(entry.st == null){
-			let ptr = this.hashTable[id];
-			if(entry.callback != null){
-				ptr.callback = entry.callback;
-			}
-			if(entry.name != null){
-				ptr.name = entry.name;
-			}
-			console.log('ptr',ptr);
-		}else{
-			// Heapify
+		let ptr = this.hashTable[id];
+		
+		if(entry.st != null){
+			// Remove the record from heap and hash O(log n)
+			delete this.hashTable[id];
+			this.minHeap.remove(ptr);
+			
+			// Update time & inject back
+			ptr.st = entry.st;
+			this.hashTable[id] = ptr;
+			this.minHeap.insert(ptr);
+		}
+		if(entry.callback != null){
+			ptr.callback = entry.callback;
+		}
+		if(entry.name != null){
+			ptr.name = entry.name;
 		}
 	}
 	

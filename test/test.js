@@ -125,6 +125,25 @@ class TestSuite{
 				popped.callback.should.equal(newCb)
 				
 			});
+			it('Simple task time modification',(done)=>{
+				let time = new Date();
+				time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
+				
+				let toModify = false;
+				let cb = function(){
+					toModify=true;
+				};
+				let task = {name:'task', st:time.getTime(), callback:cb};
+				let nodeId= instance.insert(task);
+				
+				// Modify to immediate invocation
+				instance.modify(nodeId, {st:Date.now()});
+				setTimeout(function(){
+					toModify.should.equal(true);
+					done();
+				},40)
+				
+			});
 			
 		})
 	}

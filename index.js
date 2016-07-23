@@ -72,7 +72,6 @@ class JoltScheduler{
 			callback: newEntry.callback || null
 		};
 		
-		console.log('modifing');
 		dataSet.modifyEntry(id,sterilizedEntry);
 	}
 }
