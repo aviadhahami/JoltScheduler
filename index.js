@@ -34,7 +34,6 @@ class JoltScheduler{
 			st: newEntry.st || null,
 			callback: newEntry.callback || null
 		};
-		console.log('passing to dataset');
 		dataSet.modifyEntry(id,sterilizedEntry);
 		this._updateInvoker();
 	}
@@ -44,7 +43,6 @@ class JoltScheduler{
 	
 	_updateInvoker() {
 		
-		console.log('peek', dataSet.peek);
 		// If we update but no tasks are present
 		if(dataSet.peek == null) return;
 		
