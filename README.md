@@ -50,6 +50,8 @@ to modify nodes. (Otherwise it's `O(n)` only for searching the node).
 Insertion is `O(log n)`, updates are `O(1)` unless they are time updates.
 Time updates force re-bubbling of the specific node in the tree, yielding time-complexity of `O(log n)`
 
+Deletion (not pop but an arbitrary item) is of `O(n)` for search in heap and `O(n)` for heapifying thus `O(n)`
+
 # Testing
 Supplied by Mocha. Either run ```$ npm install``` and then ```$ mocha``` or (if you have mocha globaly) ```$ mocha```
 
