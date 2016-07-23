@@ -18,12 +18,15 @@ class JoltScheduler{
 	get size(){
 		return dataSet.amountOfRecords
 	}
+	
 	insert(item){
 		dataSet.insert(item);
 		this.updateInvoker()
 	}
 	
 	updateInvoker() {
+		
+		// If we update but no tasks are present
 		if(dataSet.peek == null) return;
 		if (this.closestTask != dataSet.peek){
 			// Means that the DS is either empty or we've got earlier event
@@ -41,7 +44,6 @@ class JoltScheduler{
 	}
 	
 	invoker() {
-		
 		let that = this;
 		// on timeout, we invoke callback and pop the task from the dataset
 		let invocationCallback = function(){
@@ -58,6 +60,18 @@ class JoltScheduler{
 		return dataSet.pop;
 	}
 	
+	modify(id,newEntry){
+		if(!dataSet.contains(id)) return;
+		if(newEntry == null || newEntry == undefined) return;
+		
+		// Sterilize new entry before passing it
+		let sterilizedEntry = {
+			name:newEntry.name || null,
+			st: newEntry.st || null,
+			callback: newEntry.callback || null
+		};
+		dataSet.modify(id,sterilizedEntry);
+	}
 }
 
 module.exports = JoltScheduler;
