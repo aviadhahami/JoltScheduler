@@ -47,13 +47,13 @@ class TestSuite{
 			it('Test id existence',()=>{
 				let temp = {name:'a',st:123,callback:()=>{}};
 				instance.insert(temp);
-				(typeof instance.pop()._id).should.equal('string')
+				(typeof instance._pop()._id).should.equal('string')
 			});
 			
 			it('Test extracted object equality (emit id)',()=>{
 				let temp = {name:'a',st:123,callback:()=>{}};
 				instance.insert(temp)
-				let res = instance.pop()
+				let res = instance._pop()
 				temp.name.should.equal(res.name)
 				temp.st.should.equal(res.st)
 				temp.callback.should.equal(res.callback)
@@ -69,19 +69,19 @@ class TestSuite{
 				instance.insert(temp4)
 				
 				// Order should be --> b,c,a,d
-				instance.pop().name.should.equal('b')
-				instance.pop().name.should.equal('c')
-				instance.pop().name.should.equal('a')
+				instance._pop().name.should.equal('b')
+				instance._pop().name.should.equal('c')
+				instance._pop().name.should.equal('a')
 			})
 			it('Test size after insertion of 10 and extraction of 3',()=>{
 				for(let i=0;i<10;i++){
 					instance.insert({name:'a'+i,st:i,callback:()=>{}})
 				}
 				instance.size.should.equal(10)
-				instance.pop()
+				instance._pop()
 				instance.size.should.equal(9)
-				instance.pop()
-				instance.pop()
+				instance._pop()
+				instance._pop()
 				instance.size.should.equal(7)
 				
 			})
@@ -121,7 +121,7 @@ class TestSuite{
 				instance.modify(nodeId, {callback:newCb});
 
 
-				let popped = instance.pop();
+				let popped = instance._pop();
 				popped.name.should.equal('new name');
 				popped.callback.should.equal(newCb)
 

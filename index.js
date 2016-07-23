@@ -21,11 +21,27 @@ class JoltScheduler{
 	
 	insert(item){
 		let id = dataSet.insert(item);
-		this.updateInvoker()
+		this._updateInvoker()
 		return id;
 	}
+	modify(id,newEntry){
+		if(!dataSet.contains(id)) return;
+		if(newEntry == null || newEntry == undefined) return;
+		
+		// Sterilize new entry before passing it
+		let sterilizedEntry = {
+			name:newEntry.name || null,
+			st: newEntry.st || null,
+			callback: newEntry.callback || null
+		};
+		dataSet.modifyEntry(id,sterilizedEntry);
+		this._updateInvoker();
+	}
+	deleteTask(id){
+		// Todo: implement this
+	}
 	
-	updateInvoker() {
+	_updateInvoker() {
 		
 		// If we update but no tasks are present
 		if(dataSet.peek == null) return;
@@ -39,17 +55,17 @@ class JoltScheduler{
 			}
 			
 			// Force new timeout
-			this.invoker();
+			this._invoker();
 		}else return;
 	}
 	
-	invoker() {
+	_invoker() {
 		let that = this;
 		// on timeout, we invoke callback and pop the task from the dataset
 		let invocationCallback = function(){
 			dataSet.pop;
 			that.closestTask.callback();
-			that.updateInvoker()
+			that._updateInvoker()
 		};
 		
 		// Save timeout ID and count...
@@ -57,23 +73,10 @@ class JoltScheduler{
 		timeoutHolder = setTimeout(invocationCallback,timeToWait < 0? 0 : timeToWait );
 	}
 	
-	pop(){
+	_pop(){
 		return dataSet.pop;
 	}
 	
-	modify(id,newEntry){
-		if(!dataSet.contains(id)) return;
-		if(newEntry == null || newEntry == undefined) return;
-		
-		// Sterilize new entry before passing it
-		let sterilizedEntry = {
-			name:newEntry.name || null,
-			st: newEntry.st || null,
-			callback: newEntry.callback || null
-		};
-		dataSet.modifyEntry(id,sterilizedEntry);
-		this.updateInvoker();
-	}
 }
 
 module.exports = JoltScheduler;
