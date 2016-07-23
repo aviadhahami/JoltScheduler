@@ -56,10 +56,10 @@ class JoltScheduler{
 		};
 		
 		// Save timeout ID and count...
-		let timeToWait= (this.closestTask.st - Date.now());
-		console.log(`time to wait ${timeToWait}`);
+		let timeToWait= (this.closestTask.st - Date.now())/1000;
+		// console.log(`time to wait ${timeToWait}ms`);
 		timeoutHolder = setTimeout(invocationCallback,timeToWait < 0? 0 : timeToWait );
-		console.log(`next task is ${that.closestTask.name}`);
+		// console.log(`next task is ${that.closestTask.name}`);
 	}
 	
 	pop(){

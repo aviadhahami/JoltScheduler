@@ -106,70 +106,67 @@ class TestSuite{
 				// Create a new Rectangle object before every test.
 				instance = new JoltScheduler()
 			});
-			// it('Simple task modification (all data but time)',()=>{
-			// 	let time = new Date();
-			// 	time.setMinutes(time.getMinutes()+1); // set 1 min cause we need time to modify
-			// 	let cb = function(){
-			// 		return 5;
-			// 	};
-			// 	let task = {name:'task', st:time.getTime(), callback:cb};
-			// 	let nodeId= instance.insert(task);
-			//
-			// 	let newCb = function(){
-			// 		return 1;
-			// 	}
-			// 	instance.modify(nodeId, {name:'new name'});
-			// 	instance.modify(nodeId, {callback:newCb});
-			//
-			//
-			// 	let popped = instance.pop();
-			// 	popped.name.should.equal('new name')
-			// 	popped.callback.should.equal(newCb)
-			//
-			// });
-			// it('Simple task time modification',(done)=>{
-			// 	let time = new Date();
-			// 	time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
-			//
-			// 	let toModify = false;
-			// 	let cb = function(){
-			// 		toModify=true;
-			// 	};
-			// 	let task = {name:'task', st:time.getTime(), callback:cb};
-			// 	let nodeId= instance.insert(task);
-			//
-			// 	// Modify to immediate invocation
-			// 	instance.modify(nodeId, {st:Date.now()});
-			// 	setTimeout(function(){
-			// 		toModify.should.equal(true);
-			// 		done();
-			// 	},40)
-			//
-			// });
+			it('Simple task modification (all data but time)',()=>{
+				let time = new Date();
+				time.setMinutes(time.getMinutes()+1); // set 1 min cause we need time to modify
+				let cb = function(){
+					return 5;
+				};
+				let task = {name:'task', st:time.getTime(), callback:cb};
+				let nodeId= instance.insert(task);
+
+				let newCb = function(){
+					return 1;
+				};
+				instance.modify(nodeId, {name:'new name'});
+				instance.modify(nodeId, {callback:newCb});
+
+
+				let popped = instance.pop();
+				popped.name.should.equal('new name');
+				popped.callback.should.equal(newCb)
+
+			});
+			it('Simple task time modification',(done)=>{
+				let time = new Date();
+				time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
+
+				let toModify = false;
+				let cb = function(){
+					toModify=true;
+				};
+				let task = {name:'task', st:time.getTime(), callback:cb};
+				let nodeId= instance.insert(task);
+
+				// Modify to immediate invocation
+				instance.modify(nodeId, {st:Date.now()});
+				setTimeout(function(){
+					toModify.should.equal(true);
+					done();
+				},1000)
+
+			});
 			it('Modify task to create race',(done)=>{
 				let time_a = new Date();
 				let time_b = new Date();
-				time_a.setSeconds(time_a.getSeconds()+8);
-				time_b.setSeconds(time_b.getSeconds()+10);
+				time_a.setSeconds(time_a.getSeconds()+ 3);
+				time_b.setSeconds(time_b.getSeconds()+ 5);
 
 				let toModify = 2;
 				let cb_a = function(){
-					console.log('cb a');
 					toModify += 1;
 				};
 				let cb_b = function(){
-					console.log('cb b');
 					toModify *= 2;
 				};
-				
+
 				let task_a = {name:'task a', st:time_a.getTime(), callback:cb_a};
 				let task_b = {name:'task b', st:time_b.getTime(), callback:cb_b};
 
 				// insert
-				console.log('a id:' + instance.insert(task_a));;
+				instance.insert(task_a);
 				let node_b_Id= instance.insert(task_b);
-				console.log(`b id ${node_b_Id}`);
-				
+
 				// Modify to immediate invocation
 				instance.modify(node_b_Id, {st:Date.now()});
 				console.log('Modified B');
@@ -177,7 +174,7 @@ class TestSuite{
 				setTimeout(function(){
 					toModify.should.equal(5);
 					done();
-				},5000)
+				},3000)
 			})
 			
 		})
@@ -337,17 +334,17 @@ class TestSuite{
 	
 	static run(){
 		describe('Data Structure Suite',()=>{
-				// this.testInit();
-				// this.testInsertion();
-				// this.testExtraction();
+				this.testInit();
+				this.testInsertion();
+				this.testExtraction();
 				this.testModification();
 			}
 		);
-		// describe('Execution Suite',()=>{
-		//
-		// 	this.testStandardExecution();
-		// 	this.testSpecialExecutions();
-		// })
+		describe('Execution Suite',()=>{
+
+			this.testStandardExecution();
+			this.testSpecialExecutions();
+		})
 	}
 	
 }
