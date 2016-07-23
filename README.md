@@ -39,8 +39,8 @@ If failed to create this kind of objects, you'll hit an exception
 | ------------- |-------------|
 | size     | Property.  Returns the amount of tasks waiting |
 | insert(item)      | Inserts an item of the shape ```task```. Returns entry id      | 
-| modify(id,newEntry) | Modifies an existing entry's props ```name, st or callback``` given the right id     |
-|deleteTask(id)| Deletes an entry given the right id and under the assumption it wasn't executed yet|
+| modify(id,newEntry) | Modifies an existing entry's props ```name, st or callback``` given the right id. One should pass an object composed at least from one of those fields in order to properly modify an entry     |
+|remove(id)| Deletes an entry given the right id and under the assumption it wasn't executed yet|
 
 # Data Model
 The data model here is composed of min-heap and hash table.
