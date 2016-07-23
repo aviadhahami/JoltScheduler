@@ -39,7 +39,6 @@ class TestSuite{
 	static testExtraction(){
 		describe('Test Extraction',()=>{
 			let instance;
-			
 			beforeEach(() => {
 				// Create a new Rectangle object before every test.
 				instance = new JoltScheduler()
@@ -102,7 +101,33 @@ class TestSuite{
 	// Execution tests
 	
 	static testStandardExecution() {
+		let instance;
+		beforeEach(() => {
+			// Create a new Rectangle object before every test.
+			instance = new JoltScheduler()
+		});
 		
+		it('Standard task insertion and execution',function(done){
+			
+			// Create delay of 3 sec
+			let time = new Date();
+			time.setSeconds(time.getSeconds() + 3);
+			
+			// Set variable to test callback against
+			let toModify = null;
+			
+			// Callback will modify the var from null to {}
+			let callback = function(){
+				toModify = "1";
+				console.log('modified!');
+			};
+			let task = {name:'task', st:time.getTime(), callback:callback};
+			instance.insert(task);
+			
+			// Test execution
+			"1".should.equal(toModify)
+			done() // Wait for timeout
+		})
 	}
 	
 	static testSpecialExecutions() {
