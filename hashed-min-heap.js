@@ -45,7 +45,6 @@ class HashedMinHeap{
 		}
 	}
 	
-	
 	get peek() {
 		return this.minHeap.peek()
 	}
