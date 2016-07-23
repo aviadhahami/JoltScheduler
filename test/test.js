@@ -105,6 +105,22 @@ class TestSuite{
 				instance = new JoltScheduler()
 			});
 			it('Simple task modification (all data but time)',()=>{
+				let time = new Date();
+				time.setMinutes(time.getMinutes()+1); // set 1 min cause we need time to modify
+				let cb = function(){
+					return 5;
+				};
+				let task = {name:'task', st:time.getTime(), callback:cb};
+				let nodeId= instance.insert(task);
+				instance.modify(nodeId, {name:'new name'});
+				instance.modify(nodeId, {st:time.getTime()});
+				instance.modify(nodeId, {callback:function(){return 1;}});
+				
+				
+				let popped = instance.pop();
+				popped.name.should.equal('new name')
+				popped.st.should.equal(time.getTime())
+				popped.name.should.equal(function(){return 1;})
 				
 			});
 			
