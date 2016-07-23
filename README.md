@@ -38,9 +38,9 @@ If failed to create this kind of objects, you'll hit an exception
 | API       | Description |
 | ------------- |-------------|
 | size     | Property.  Returns the amount of tasks waiting |
-| insert(item)      | inserts an item of the shape ```task```. Returns entry id      | 
-| modify(id,newEntry) | modifies an existing entry's props ```name, st or callback``` given the right id     |
-|delete(id)| deletes an entry given the right id and under the assumption it wasn't executed yet|
+| insert(item)      | Inserts an item of the shape ```task```. Returns entry id      | 
+| modify(id,newEntry) | Modifies an existing entry's props ```name, st or callback``` given the right id     |
+|deleteTask(id)| Deletes an entry given the right id and under the assumption it wasn't executed yet|
 
 # Data Model
 The data model here is composed of min-heap and hash table.
@@ -50,7 +50,8 @@ to modify nodes. (Otherwise it's `O(n)` only for searching the node).
 Insertion is `O(log n)`, updates are `O(1)` unless they are time updates.
 Time updates force re-bubbling of the specific node in the tree, yielding time-complexity of `O(log n)`
 
-
+# Testing
+Supplied by Mocha. Either run ```$ npm install``` and then ```$ mocha``` or (if you have mocha globaly) ```$ mocha```
 
 
 #### Props
