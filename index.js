@@ -70,7 +70,7 @@ class JoltScheduler{
 			st: newEntry.st || null,
 			callback: newEntry.callback || null
 		};
-		dataSet.modify(id,sterilizedEntry);
+		dataSet.modifyEntry(id,sterilizedEntry);
 	}
 }
 
