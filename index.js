@@ -69,7 +69,7 @@ class JoltScheduler{
 		};
 		
 		// Save timeout ID and count...
-		let timeToWait= (this.closestTask.st - Date.now())/1000; // Divide by 1K or get timeouts of O(never)
+		let timeToWait= (this.closestTask.st - Date.now());
 		timeoutHolder = setTimeout(invocationCallback,timeToWait < 0? 0 : timeToWait );
 	}
 	
