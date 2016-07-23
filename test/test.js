@@ -128,6 +128,37 @@ class TestSuite{
 					true.should.equal(toModify);
 					done(); // Wait for timeout
 				},501);
+			});
+			it('Insertion of 2 tasks, (1500ms delay)',function(done){
+				
+				// Create delay of 3 sec
+				let time_a = new Date();
+				let time_b = new Date();
+				time_a.setSeconds(time_a.getSeconds() + 1.5);
+				time_b.setSeconds(time_b.getSeconds() + 1.7);
+				
+				// Set variables to test callback against
+				let toModifyA = null;
+				let toModifyB = null;
+				
+				// Callback will modify the var from null to {}
+				let callback_a = function(){
+					toModifyA = true;
+				};
+				let callback_b = function(){
+					toModifyB = false;
+				};
+				let task_a = {name:'task A', st:time_a.getTime(), callback:callback_a};
+				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
+				instance.insert(task_a);
+				instance.insert(task_b);
+				
+				setTimeout(function(){
+					// Test execution
+					true.should.equal(toModifyA);
+					false.should.equal(toModifyB);
+					done(); // Wait for timeout
+				},501);
 			})
 		})
 	}
