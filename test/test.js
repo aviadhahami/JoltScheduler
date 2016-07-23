@@ -108,21 +108,21 @@ class TestSuite{
 		});
 		describe('Standard task insertion and execution',()=>{
 			it('Insertion of task (500ms delayed)',function(done){
-				
+
 				// Create delay of 3 sec
 				let time = new Date();
 				time.setSeconds(time.getSeconds() + 0.5);
-				
+
 				// Set variable to test callback against
 				let toModify = null;
-				
+
 				// Callback will modify the var from null to {}
 				let callback = function(){
 					toModify = true;
 				};
 				let task = {name:'task', st:time.getTime(), callback:callback};
 				instance.insert(task);
-				
+
 				setTimeout(function(){
 					// Test execution
 					true.should.equal(toModify);
@@ -130,17 +130,17 @@ class TestSuite{
 				},501);
 			});
 			it('Insertion of 2 tasks, (1500ms delay)',function(done){
-				
+
 				// Create delay of 3 sec
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds() + 1.5);
 				time_b.setSeconds(time_b.getSeconds() + 1.7);
-				
+
 				// Set variables to test callback against
 				let toModifyA = null;
 				let toModifyB = null;
-				
+
 				// Callback will modify the var from null to {}
 				let callback_a = function(){
 					toModifyA = true;
@@ -152,11 +152,42 @@ class TestSuite{
 				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
 				instance.insert(task_a);
 				instance.insert(task_b);
-				
+
 				setTimeout(function(){
 					// Test execution
 					true.should.equal(toModifyA);
 					false.should.equal(toModifyB);
+					done(); // Wait for timeout
+				},501);
+			})
+		})
+		describe('Execution races',()=>{
+			it('Insert task, then insert sooner task',function(done){
+				
+				// Create delay of 3 sec
+				let time_a = new Date();
+				let time_b = new Date();
+				time_a.setSeconds(time_a.getSeconds() + 1);
+				time_b.setSeconds(time_b.getSeconds() + 0.5);
+				
+				// Set variables to test callback against
+				let toModify = 2;
+				
+				// Callback will modify the var from null to {}
+				let callback_a = function(){
+					toModify += 1;
+				};
+				let callback_b = function(){
+					toModify *= 2;
+				};
+				let task_a = {name:'task A', st:time_a.getTime(), callback:callback_a};
+				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
+				instance.insert(task_a);
+				instance.insert(task_b)
+				
+				setTimeout(function(){
+					// Test execution
+					toModify.should.equal(5);
 					done(); // Wait for timeout
 				},501);
 			})
