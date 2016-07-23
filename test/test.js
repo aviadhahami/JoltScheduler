@@ -169,7 +169,6 @@ class TestSuite{
 
 				// Modify to immediate invocation
 				instance.modify(node_b_Id, {st:Date.now()});
-				console.log('Modified B');
 
 				setTimeout(function(){
 					toModify.should.equal(5);
