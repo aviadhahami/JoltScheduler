@@ -20,8 +20,9 @@ class JoltScheduler{
 	}
 	
 	insert(item){
-		dataSet.insert(item);
+		let id = dataSet.insert(item);
 		this.updateInvoker()
+		return id;
 	}
 	
 	updateInvoker() {
@@ -70,6 +71,8 @@ class JoltScheduler{
 			st: newEntry.st || null,
 			callback: newEntry.callback || null
 		};
+		
+		console.log('modifing');
 		dataSet.modifyEntry(id,sterilizedEntry);
 	}
 }

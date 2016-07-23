@@ -19,12 +19,10 @@ class HashedMinHeap{
 	}
 	
 	get pop() {
-		
-		let poped = this.minHeap.removeHead()
-		
+		let poped = this.minHeap.removeHead();
 		if(poped != null && poped != undefined){
 			// Clear hash entry
-			delete this.hashTable[poped._id]
+			delete this.hashTable[poped._id];
 			return poped
 		}else{
 			return null
@@ -45,6 +43,7 @@ class HashedMinHeap{
 			// Insert new entry to the hash (id : entry) and to the heap
 			this.hashTable[id] = modifiedEntry;
 			this.minHeap.insert(modifiedEntry)
+			return id;
 		}else{
 			throw 'Entry is not of proper form!'
 		}
@@ -58,8 +57,25 @@ class HashedMinHeap{
 		return this.minHeap.getSize()
 	}
 	
-	modifyEntry(entry) {
-		// TODO: implement via heapify if needed
+	contains(id){
+		return !!this.hashTable.hasOwnProperty(id);
+	}
+	
+	modifyEntry(id,entry) {
+		
+		// If the st wasn't modified, we don't need to heapify
+		if(entry.st == null){
+			let ptr = this.hashTable[id];
+			if(entry.callback != null){
+				ptr.callback = entry.callback;
+			}
+			if(entry.name != null){
+				ptr.name = entry.name;
+			}
+			console.log('ptr',ptr);
+		}else{
+			// Heapify
+		}
 	}
 	
 	generateID(startingTime) {
