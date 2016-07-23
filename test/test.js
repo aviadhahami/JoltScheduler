@@ -113,44 +113,44 @@ class TestSuite{
 				};
 				let task = {name:'task', st:time.getTime(), callback:cb};
 				let nodeId= instance.insert(task);
-
+				
 				let newCb = function(){
 					return 1;
 				};
 				instance.modify(nodeId, {name:'new name'});
 				instance.modify(nodeId, {callback:newCb});
-
-
+				
+				
 				let popped = instance._pop();
 				popped.name.should.equal('new name');
 				popped.callback.should.equal(newCb)
-
+				
 			});
 			it('Simple task time modification',(done)=>{
 				let time = new Date();
 				time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
-
+				
 				let toModify = false;
 				let cb = function(){
 					toModify=true;
 				};
 				let task = {name:'task', st:time.getTime(), callback:cb};
 				let nodeId= instance.insert(task);
-
+				
 				// Modify to immediate invocation
 				instance.modify(nodeId, {st:Date.now()});
 				setTimeout(function(){
 					toModify.should.equal(true);
 					done();
 				},1000)
-
+				
 			});
 			it('Modify task to create race',(done)=>{
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds()+ 3);
 				time_b.setSeconds(time_b.getSeconds()+ 5);
-
+				
 				let toModify = 2;
 				let cb_a = function(){
 					toModify += 1;
@@ -158,17 +158,17 @@ class TestSuite{
 				let cb_b = function(){
 					toModify *= 2;
 				};
-
+				
 				let task_a = {name:'task a', st:time_a.getTime(), callback:cb_a};
 				let task_b = {name:'task b', st:time_b.getTime(), callback:cb_b};
-
+				
 				// insert
 				instance.insert(task_a);
 				let node_b_Id= instance.insert(task_b);
-
+				
 				// Modify to immediate invocation
 				instance.modify(node_b_Id, {st:Date.now()});
-
+				
 				setTimeout(function(){
 					toModify.should.equal(5);
 					done();
@@ -177,7 +177,38 @@ class TestSuite{
 			
 		})
 	}
-	
+	static testDeletion() {
+		describe('Test deletion',()=>{
+			let instance;
+			beforeEach(()=>{
+				instance = new JoltScheduler();
+			})
+			
+			it('Simple insertion and deletion',()=>{
+				let time = new Date();
+				time.setMinutes(time.getMinutes() + 2);
+				let task={
+					name:'task',
+					st:time,
+					callback: function(){return;}
+				};
+				let id = instance.insert(task)
+				instance.remove(id);
+				instance.size.should.equal(0);
+			});
+			
+			it('Attempt deletion of non-existing',(done)=>{
+				try{
+					instance.remove(123);
+					// Should throw exception, therefor if it's here we force fail
+					"a".should.equal(0);
+				}catch (e){
+					"a".should.equal("a");
+					done();
+				}
+			});
+		})
+	}
 	
 	// Execution tests
 	static testStandardExecution() {
@@ -243,16 +274,16 @@ class TestSuite{
 		})
 		describe('Execution race',()=>{
 			it('Insert task, then insert sooner task',function(done){
-
+				
 				// Create create delta of 0.5s
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds() + 1);
 				time_b.setSeconds(time_b.getSeconds() + 0.5);
-
+				
 				// Set variable to test callback against
 				let toModify = 2;
-
+				
 				// Callbacks to modify the var
 				let callback_a = function(){
 					toModify += 1;
@@ -264,7 +295,7 @@ class TestSuite{
 				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
 				instance.insert(task_a);
 				instance.insert(task_b)
-
+				
 				//  Since we expect execution of B and then A,
 				// 	We should get 2*2+1=5.
 				//  If A would of executed before B, we will get (2+1)*2=6
@@ -275,7 +306,7 @@ class TestSuite{
 				},501);
 			})
 			it('Insert task and negative time tasks (immediate)',function(done){
-
+				
 				// Create create delta of 0.5s
 				let time_a = new Date();
 				let time_b = new Date();
@@ -283,10 +314,10 @@ class TestSuite{
 				time_a.setSeconds(time_a.getSeconds() + 1);
 				time_b.setSeconds(time_b.getSeconds() - 0.5);
 				time_c.setSeconds(time_c.getSeconds() - 0.8);
-
+				
 				// Set variable to test callback against
 				let toModify = 2;
-
+				
 				// Callbacks to modify the var
 				let callback_a = function(){
 					toModify *= 3;
@@ -303,7 +334,7 @@ class TestSuite{
 				instance.insert(task_a);
 				instance.insert(task_b);
 				instance.insert(task_c);
-
+				
 				//  Since we expect execution of B and C (no order) and then A,
 				// 	We should get (2+1+1)*3=12.
 				//  If A would of executed before B or C, we will get (2+1)*2=10
@@ -315,19 +346,6 @@ class TestSuite{
 			})
 		})
 	}
-	static testSpecialExecutions() {
-		let instance;
-		beforeEach(() => {
-			// Create a new Rectangle object before every test.
-			instance = new JoltScheduler()
-		});
-		describe('Tasks modification execution',()=>{
-			// TODO: this
-		});
-		describe('insert task, insert sooner, modify origin to immidiate',()=>{
-			// TODO: this
-		})
-	}
 	
 	
 	static run(){
@@ -335,13 +353,12 @@ class TestSuite{
 				this.testInit();
 				this.testInsertion();
 				this.testExtraction();
+				this.testDeletion()
 				this.testModification();
 			}
 		);
 		describe('Execution Suite',()=>{
-
 			this.testStandardExecution();
-			this.testSpecialExecutions();
 		})
 	}
 	
