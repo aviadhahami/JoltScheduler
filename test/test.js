@@ -108,21 +108,21 @@ class TestSuite{
 		});
 		describe('Standard task insertion and execution',()=>{
 			it('Insertion of task (500ms delayed)',function(done){
-
+				
 				// Create delay of 3 sec
 				let time = new Date();
 				time.setSeconds(time.getSeconds() + 0.5);
-
+				
 				// Set variable to test callback against
 				let toModify = null;
-
+				
 				// Callback will modify the var from null to {}
 				let callback = function(){
 					toModify = true;
 				};
 				let task = {name:'task', st:time.getTime(), callback:callback};
 				instance.insert(task);
-
+				
 				setTimeout(function(){
 					// Test execution
 					true.should.equal(toModify);
@@ -130,17 +130,17 @@ class TestSuite{
 				},501);
 			});
 			it('Insertion of 2 tasks, (1500ms delay)',function(done){
-
+				
 				// Create delay of 3 sec
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds() + 1.5);
 				time_b.setSeconds(time_b.getSeconds() + 1.7);
-
+				
 				// Set variables to test callback against
 				let toModifyA = null;
 				let toModifyB = null;
-
+				
 				// Callback will modify the var from null to {}
 				let callback_a = function(){
 					toModifyA = true;
@@ -152,7 +152,7 @@ class TestSuite{
 				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
 				instance.insert(task_a);
 				instance.insert(task_b);
-
+				
 				setTimeout(function(){
 					// Test execution
 					true.should.equal(toModifyA);
@@ -161,19 +161,19 @@ class TestSuite{
 				},501);
 			})
 		})
-		describe('Execution races',()=>{
+		describe('Execution race',()=>{
 			it('Insert task, then insert sooner task',function(done){
 				
-				// Create delay of 3 sec
+				// Create create delta of 0.5s
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds() + 1);
 				time_b.setSeconds(time_b.getSeconds() + 0.5);
 				
-				// Set variables to test callback against
+				// Set variable to test callback against
 				let toModify = 2;
 				
-				// Callback will modify the var from null to {}
+				// Callbacks to modify the var
 				let callback_a = function(){
 					toModify += 1;
 				};
@@ -185,11 +185,53 @@ class TestSuite{
 				instance.insert(task_a);
 				instance.insert(task_b)
 				
+				//  Since we expect execution of B and then A,
+				// 	We should get 2*2+1=5.
+				//  If A would of executed before B, we will get (2+1)*2=6
 				setTimeout(function(){
 					// Test execution
 					toModify.should.equal(5);
 					done(); // Wait for timeout
 				},501);
+			})
+			it('Insert task and negative time tasks (immediate)',function(done){
+				
+				// Create create delta of 0.5s
+				let time_a = new Date();
+				let time_b = new Date();
+				let time_c = new Date();
+				time_a.setSeconds(time_a.getSeconds() + 1);
+				time_b.setSeconds(time_b.getSeconds() - 0.5);
+				time_c.setSeconds(time_c.getSeconds() - 0.8);
+				
+				// Set variable to test callback against
+				let toModify = 2;
+				
+				// Callbacks to modify the var
+				let callback_a = function(){
+					toModify *= 3;
+				};
+				let callback_b = function(){
+					toModify += 1;
+				};
+				let callback_c = function(){
+					toModify +=1
+				};
+				let task_a = {name:'task A', st:time_a.getTime(), callback:callback_a};
+				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
+				let task_c = {name:'task C', st:time_c.getTime(), callback:callback_c};
+				instance.insert(task_a);
+				instance.insert(task_b);
+				instance.insert(task_c);
+				
+				//  Since we expect execution of B and C (no order) and then A,
+				// 	We should get (2+1+1)*3=12.
+				//  If A would of executed before B or C, we will get (2+1)*2=10
+				setTimeout(function(){
+					// Test execution
+					toModify.should.equal(12);
+					done(); // Wait for timeout
+				},1001);
 			})
 		})
 	}
