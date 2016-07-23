@@ -189,10 +189,10 @@ class TestSuite{
 				time.setMinutes(time.getMinutes() + 2);
 				let task={
 					name:'task',
-					st:time,
+					st:time.getTime(),
 					callback: function(){return;}
 				};
-				let id = instance.insert(task)
+				let id = instance.insert(task);
 				instance.remove(id);
 				instance.size.should.equal(0);
 			});
