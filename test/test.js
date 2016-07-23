@@ -106,28 +106,29 @@ class TestSuite{
 			// Create a new Rectangle object before every test.
 			instance = new JoltScheduler()
 		});
-		
-		it('Standard task insertion and execution',function(done){
-			
-			// Create delay of 3 sec
-			let time = new Date();
-			time.setSeconds(time.getSeconds() + 1);
-			
-			// Set variable to test callback against
-			let toModify = null;
-			
-			// Callback will modify the var from null to {}
-			let callback = function(){
-				toModify = true;
-			};
-			let task = {name:'task', st:time.getTime(), callback:callback};
-			instance.insert(task);
-			
-			setTimeout(function(){
-				// Test execution
-				true.should.equal(toModify);
-				done(); // Wait for timeout
-			},1005);
+		describe('Standard task insertion and execution',()=>{
+			it('Insertion of task (500ms delayed)',function(done){
+				
+				// Create delay of 3 sec
+				let time = new Date();
+				time.setSeconds(time.getSeconds() + 0.5);
+				
+				// Set variable to test callback against
+				let toModify = null;
+				
+				// Callback will modify the var from null to {}
+				let callback = function(){
+					toModify = true;
+				};
+				let task = {name:'task', st:time.getTime(), callback:callback};
+				instance.insert(task);
+				
+				setTimeout(function(){
+					// Test execution
+					true.should.equal(toModify);
+					done(); // Wait for timeout
+				},501);
+			})
 		})
 	}
 	
@@ -137,13 +138,13 @@ class TestSuite{
 	
 	
 	static run(){
-		describe('Test Data Structure',()=>{
+		describe('Data Structure Suite',()=>{
 				this.testInit();
 				this.testInsertion();
 				this.testExtraction();
 			}
 		);
-		describe('Test Execution',()=>{
+		describe('Execution Suite',()=>{
 			
 			this.testStandardExecution();
 			this.testSpecialExecutions();
