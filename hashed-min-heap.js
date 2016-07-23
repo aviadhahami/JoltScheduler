@@ -73,6 +73,8 @@ class HashedMinHeap{
 			
 			// Update time & inject back
 			ptr.st = entry.st;
+			// console.log('inserting', ptr);
+
 			this.hashTable[id] = ptr;
 			this.minHeap.insert(ptr);
 		}

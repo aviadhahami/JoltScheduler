@@ -27,7 +27,7 @@ class JoltScheduler{
 	
 	updateInvoker() {
 		
-		console.log('invoker',dataSet);
+		// console.log('invoker',dataSet);
 		// If we update but no tasks are present
 		if(dataSet.peek == null) return;
 		if (this.closestTask != dataSet.peek){
@@ -55,8 +55,8 @@ class JoltScheduler{
 		};
 		
 		// Save timeout ID and count...
-		timeoutHolder = setTimeout(invocationCallback,this.closestTask.st);
-		console.log(`next task is ${that.closestTask.name}`);
+		timeoutHolder = setTimeout(invocationCallback,this.closestTask.st-Date.now());
+		// console.log(`next task is ${that.closestTask.name}`);
 	}
 	
 	pop(){
