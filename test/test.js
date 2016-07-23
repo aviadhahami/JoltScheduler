@@ -10,6 +10,7 @@ chai.should();
 
 class TestSuite{
 	
+	
 	// Data structure tests
 	static testInsertion() {
 		let instance;
@@ -98,52 +99,86 @@ class TestSuite{
 		})
 	}
 	static testModification() {
-		describe('Test Modification', ()=>{
+		describe('Test Modification',function(){
+			this.timeout(10000);
 			let instance;
 			beforeEach(() => {
 				// Create a new Rectangle object before every test.
 				instance = new JoltScheduler()
 			});
-			it('Simple task modification (all data but time)',()=>{
-				let time = new Date();
-				time.setMinutes(time.getMinutes()+1); // set 1 min cause we need time to modify
-				let cb = function(){
-					return 5;
+			// it('Simple task modification (all data but time)',()=>{
+			// 	let time = new Date();
+			// 	time.setMinutes(time.getMinutes()+1); // set 1 min cause we need time to modify
+			// 	let cb = function(){
+			// 		return 5;
+			// 	};
+			// 	let task = {name:'task', st:time.getTime(), callback:cb};
+			// 	let nodeId= instance.insert(task);
+			//
+			// 	let newCb = function(){
+			// 		return 1;
+			// 	}
+			// 	instance.modify(nodeId, {name:'new name'});
+			// 	instance.modify(nodeId, {callback:newCb});
+			//
+			//
+			// 	let popped = instance.pop();
+			// 	popped.name.should.equal('new name')
+			// 	popped.callback.should.equal(newCb)
+			//
+			// });
+			// it('Simple task time modification',(done)=>{
+			// 	let time = new Date();
+			// 	time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
+			//
+			// 	let toModify = false;
+			// 	let cb = function(){
+			// 		toModify=true;
+			// 	};
+			// 	let task = {name:'task', st:time.getTime(), callback:cb};
+			// 	let nodeId= instance.insert(task);
+			//
+			// 	// Modify to immediate invocation
+			// 	instance.modify(nodeId, {st:Date.now()});
+			// 	setTimeout(function(){
+			// 		toModify.should.equal(true);
+			// 		done();
+			// 	},40)
+			//
+			// });
+			it('Modify task to create race',(done)=>{
+				let time_a = new Date();
+				let time_b = new Date();
+				time_a.setSeconds(time_a.getSeconds()+8);
+				time_b.setSeconds(time_b.getSeconds()+10);
+
+				let toModify = 2;
+				let cb_a = function(){
+					console.log('cb a');
+					toModify += 1;
 				};
-				let task = {name:'task', st:time.getTime(), callback:cb};
-				let nodeId= instance.insert(task);
-				
-				let newCb = function(){
-					return 1;
-				}
-				instance.modify(nodeId, {name:'new name'});
-				instance.modify(nodeId, {callback:newCb});
-				
-				
-				let popped = instance.pop();
-				popped.name.should.equal('new name')
-				popped.callback.should.equal(newCb)
-				
-			});
-			it('Simple task time modification',(done)=>{
-				let time = new Date();
-				time.setMinutes(time.getMinutes()+5); // set 1 min cause we need time to modify
-				
-				let toModify = false;
-				let cb = function(){
-					toModify=true;
+				let cb_b = function(){
+					console.log('cb b');
+					toModify *= 2;
 				};
-				let task = {name:'task', st:time.getTime(), callback:cb};
-				let nodeId= instance.insert(task);
+				
+				let task_a = {name:'task a', st:time_a.getTime(), callback:cb_a};
+				let task_b = {name:'task b', st:time_b.getTime(), callback:cb_b};
+
+				// insert
+				console.log('a id:' + instance.insert(task_a));;
+				let node_b_Id= instance.insert(task_b);
+				console.log(`b id ${node_b_Id}`);
 				
 				// Modify to immediate invocation
-				instance.modify(nodeId, {st:Date.now()});
+				instance.modify(node_b_Id, {st:Date.now()});
+				console.log('Modified B');
+
 				setTimeout(function(){
-					toModify.should.equal(true);
+					toModify.should.equal(5);
 					done();
-				},40)
-				
-			});
+				},5000)
+			})
 			
 		})
 	}
@@ -213,16 +248,16 @@ class TestSuite{
 		})
 		describe('Execution race',()=>{
 			it('Insert task, then insert sooner task',function(done){
-				
+
 				// Create create delta of 0.5s
 				let time_a = new Date();
 				let time_b = new Date();
 				time_a.setSeconds(time_a.getSeconds() + 1);
 				time_b.setSeconds(time_b.getSeconds() + 0.5);
-				
+
 				// Set variable to test callback against
 				let toModify = 2;
-				
+
 				// Callbacks to modify the var
 				let callback_a = function(){
 					toModify += 1;
@@ -234,7 +269,7 @@ class TestSuite{
 				let task_b = {name:'task B', st:time_b.getTime(), callback:callback_b};
 				instance.insert(task_a);
 				instance.insert(task_b)
-				
+
 				//  Since we expect execution of B and then A,
 				// 	We should get 2*2+1=5.
 				//  If A would of executed before B, we will get (2+1)*2=6
@@ -245,7 +280,7 @@ class TestSuite{
 				},501);
 			})
 			it('Insert task and negative time tasks (immediate)',function(done){
-				
+
 				// Create create delta of 0.5s
 				let time_a = new Date();
 				let time_b = new Date();
@@ -253,10 +288,10 @@ class TestSuite{
 				time_a.setSeconds(time_a.getSeconds() + 1);
 				time_b.setSeconds(time_b.getSeconds() - 0.5);
 				time_c.setSeconds(time_c.getSeconds() - 0.8);
-				
+
 				// Set variable to test callback against
 				let toModify = 2;
-				
+
 				// Callbacks to modify the var
 				let callback_a = function(){
 					toModify *= 3;
@@ -273,7 +308,7 @@ class TestSuite{
 				instance.insert(task_a);
 				instance.insert(task_b);
 				instance.insert(task_c);
-				
+
 				//  Since we expect execution of B and C (no order) and then A,
 				// 	We should get (2+1+1)*3=12.
 				//  If A would of executed before B or C, we will get (2+1)*2=10
