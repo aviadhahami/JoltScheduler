@@ -4,12 +4,13 @@
 
 'use strict';
 let chai = require('chai');
-let JoltScheduler = require('./../index')
+let JoltScheduler = require('./../index');
 
 chai.should();
 
 class TestSuite{
 	
+	// Data structure tests
 	static testInsertion() {
 		let instance;
 		beforeEach(() => {
@@ -83,7 +84,7 @@ class TestSuite{
 				instance.pop()
 				instance.pop()
 				instance.size.should.equal(7)
-
+				
 			})
 			
 		})
@@ -98,14 +99,31 @@ class TestSuite{
 		})
 	}
 	
+	// Execution tests
+	
+	static testStandardExecution() {
+		
+	}
+	
+	static testSpecialExecutions() {
+		
+	}
+	
+	
 	static run(){
-		describe('Test Suite',()=>{
+		describe('Test Data Structure',()=>{
 				this.testInit();
 				this.testInsertion();
 				this.testExtraction();
 			}
-		)
+		);
+		describe('Test Execution',()=>{
+			
+			this.testStandardExecution();
+			this.testSpecialExecutions();
+		})
 	}
+	
 }
 
 TestSuite.run();
