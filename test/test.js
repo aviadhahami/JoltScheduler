@@ -10,7 +10,6 @@ chai.should();
 
 class TestSuite{
 	
-	
 	// Data structure tests
 	static testInsertion() {
 		let instance;

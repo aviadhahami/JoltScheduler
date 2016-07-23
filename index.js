@@ -41,7 +41,6 @@ class JoltScheduler{
 			// Force new timeout
 			this.invoker();
 		}else return;
-		
 	}
 	
 	invoker() {
@@ -54,7 +53,7 @@ class JoltScheduler{
 		};
 		
 		// Save timeout ID and count...
-		let timeToWait= (this.closestTask.st - Date.now())/1000;
+		let timeToWait= (this.closestTask.st - Date.now())/1000; // Divide by 1K or get timeouts of O(never)
 		timeoutHolder = setTimeout(invocationCallback,timeToWait < 0? 0 : timeToWait );
 	}
 	
@@ -63,7 +62,6 @@ class JoltScheduler{
 	}
 	
 	modify(id,newEntry){
-		// debugger;
 		if(!dataSet.contains(id)) return;
 		if(newEntry == null || newEntry == undefined) return;
 		
