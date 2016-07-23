@@ -65,7 +65,6 @@ class HashedMinHeap{
 		
 		// If the st wasn't modified, we don't need to heapify
 		let ptr = this.hashTable[id];
-		
 		if(entry.st != null){
 			// Remove the record from heap and hash O(log n)
 			delete this.hashTable[id];
@@ -84,6 +83,7 @@ class HashedMinHeap{
 		if(entry.name != null){
 			ptr.name = entry.name;
 		}
+		
 	}
 	
 	generateID(startingTime) {
