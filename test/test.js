@@ -36,7 +36,7 @@ class TestSuite{
 		})
 	}
 	static testExtraction(){
-		describe('test extraction',()=>{
+		describe('Test Extraction',()=>{
 			let instance;
 			
 			beforeEach(() => {
@@ -44,7 +44,7 @@ class TestSuite{
 				instance = new JoltScheduler()
 			});
 			
-			it('Test id existance',()=>{
+			it('Test id existence',()=>{
 				let temp = {name:'a',st:123,callback:()=>{}};
 				instance.insert(temp);
 				(typeof instance.pop()._id).should.equal('string')
@@ -90,7 +90,7 @@ class TestSuite{
 		
 	}
 	static testInit(){
-		describe('Test initialization', ()=>{
+		describe('Test Initialization', ()=>{
 			it('Private HashedMinHeap', ()=>{
 				let instance = new JoltScheduler();
 				'undefined'.should.equal(typeof instance.dataSet)
