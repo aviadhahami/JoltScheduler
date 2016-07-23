@@ -172,7 +172,7 @@ class TestSuite{
 				setTimeout(function(){
 					toModify.should.equal(5);
 					done();
-				},3000)
+				},3100)
 			})
 			
 		})
@@ -269,7 +269,7 @@ class TestSuite{
 					true.should.equal(toModifyA);
 					false.should.equal(toModifyB);
 					done(); // Wait for timeout
-				},501);
+				},1800);
 			})
 		})
 		describe('Execution race',()=>{
@@ -303,7 +303,7 @@ class TestSuite{
 					// Test execution
 					toModify.should.equal(5);
 					done(); // Wait for timeout
-				},501);
+				},1200);
 			})
 			it('Insert task and negative time tasks (immediate)',function(done){
 				
