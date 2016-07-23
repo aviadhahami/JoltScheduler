@@ -24,9 +24,9 @@ class JoltScheduler{
 	}
 	
 	updateInvoker() {
-		if (this.closestTask =! dataSet.peek()){
+		if (this.closestTask =! dataSet.peek){
 			// Means that the DS is either empty or we've got earlier event
-			this.closestTask = dataSet.peek();
+			this.closestTask = dataSet.peek;
 			
 			// Stop previous timeout
 			if(timeoutHolder) {
