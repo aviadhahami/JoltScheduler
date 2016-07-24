@@ -12,13 +12,13 @@ class TasksPane extends Component{
 		super();
 		this.sched = new JoltScheduler();
 	}
-	handleSubmit(){
+	handleSubmit(e){
 		let that = this;
 		let msg = this.refs.msg.value;
 		let st = parseInt(this.refs.time.value,10);
 		let name = this.refs.name.value;
 		let cb = function(){
-			return that.props.callback(`Task '${name}' said: ${msg}`)
+			return that.props.callback(`Task '${name}' said: ${msg} after ${st/1000} seconds`)
 		};
 		let date = new Date();
 		date.setSeconds(date.getSeconds() + st/1000);
