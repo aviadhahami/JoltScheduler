@@ -1,8 +1,9 @@
 .pane{
-    border: 1px solid indigo;
-    display: block;
+    margin: auto;
+    text-align: center;
+    font-size: large;
 }
 input{
-    margin-bottom: 1em;
+    margin: auto auto 1em;
     display: block;
 }

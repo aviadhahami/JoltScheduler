@@ -6,6 +6,16 @@ import TasksPane from './TasksPane';
 import MessagePane from './MessagePane';
 
 class App extends Component {
+	componentWillMount(){
+		this.setState({
+			message:null
+		})
+	}
+	updateMessage(msg){
+		this.setState({
+			message:msg
+		})
+	}
 	render() {
 		return (
 			<div className="App">
@@ -13,9 +23,13 @@ class App extends Component {
 					<img src={logo} className="App-logo" alt="logo" />
 					<h2>Welcome to JoltScheduler!</h2>
 				</div>
-				<div className="container">
-					<TasksPane className="half-size"/>
-					<MessagePane className="half-size"/>
+				<div className="row">
+					<div className="col">
+						<TasksPane className="half-size" callback={this.updateMessage.bind(this)}/>
+					</div>
+					<div className="col">
+						<MessagePane className="half-size" message={this.state.message}/>
+					</div>
 				</div>
 			</div>
 		);

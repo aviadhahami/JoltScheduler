@@ -19,10 +19,19 @@
 }
 
 .half-size{
-    width:50%;
+    width:40%;
     margin: auto;
+    display: inline-block;
 }
 .container{
     width:80%;
-    display: inline;
+}
+.row {
+    display: flex; /* equal height of the children */
+}
+
+.col {
+    flex: 1; /* additionally, equal width */
+
+    padding: 1em;
 }
