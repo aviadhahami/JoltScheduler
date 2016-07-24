@@ -2,7 +2,7 @@
  * Created by aviad on 7/22/2016.
  */
 'use strict';
-let HashedMinHeap = require('./hashed-min-heap');
+let HashedMinHeap = require('./data-structures/hashed-min-heap');
 
 // ** PRIVATE MEMBERS DECELERATION **
 let dataSet, timeoutHolder;

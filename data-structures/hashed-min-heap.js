@@ -4,7 +4,7 @@
 
 'use strict'
 
-let MinHeap = require('./data-structures/min-heap');
+let MinHeap = require('./min-heap');
 
 // Adding peek to the library...who the fuck doesn't implement peek?!
 
