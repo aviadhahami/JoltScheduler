@@ -2,3 +2,7 @@
     border: 1px solid indigo;
     display: block;
 }
+input{
+    margin-bottom: 1em;
+    display: block;
+}

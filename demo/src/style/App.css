@@ -23,6 +23,6 @@
     margin: auto;
 }
 .container{
-    width:100%;
-    display: inline-block;
+    width:80%;
+    display: inline;
 }
