@@ -6,13 +6,14 @@ import TasksPane from './TasksPane';
 import MessagePane from './MessagePane';
 
 class App extends Component {
-	componentWillMount(){
-		this.setState({
+	constructor(){
+		super();
+		this.state= {
 			message:null
-		})
+		}
 	}
 	updateMessage(msg){
-		console.log('updating');
+		console.info('changing state...');
 		this.setState({
 			message:msg
 		});

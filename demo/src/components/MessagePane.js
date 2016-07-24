@@ -11,7 +11,7 @@ class MessagePane extends Component{
 			<div className="half-size">
 				<h3>Text from callbacks</h3>
 				<div className="spawn-zone">
-					<p>{this.props.text || "no text yet"}</p>
+					<p>{this.props.message || "no text yet... "}</p>
 				</div>
 			</div>
 		)

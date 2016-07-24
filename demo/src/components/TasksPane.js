@@ -6,6 +6,7 @@ import './../style/index.css'
 import './../style/TasksPane.css'
 import JoltScheduler from './../../../index'
 
+/* eslint-disable */
 class TasksPane extends Component{
 	constructor(){
 		super();
@@ -16,15 +17,16 @@ class TasksPane extends Component{
 		let msg = this.refs.msg.value;
 		let st = parseInt(this.refs.time.value,10);
 		let name = this.refs.name.value;
-		let cb = function(msg){
-			return that.props.callback.bind(msg);
+		let cb = function(){
+			return that.props.callback(msg)
 		};
+		let date = new Date();
+		date.setSeconds(date.getSeconds() + st/1000);
 		let task ={
 			name: name,
-			st: st,
-			callback:cb(msg)
+			st: date.getTime(),
+			callback:cb
 		};
-		console.log(task,typeof task.name,typeof task.st, typeof task.callback);
 		this.sched.insert(task);
 	}
 	render(){
