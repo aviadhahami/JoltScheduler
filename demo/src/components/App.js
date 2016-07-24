@@ -12,9 +12,10 @@ class App extends Component {
 		})
 	}
 	updateMessage(msg){
+		console.log('updating');
 		this.setState({
 			message:msg
-		})
+		});
 	}
 	render() {
 		return (

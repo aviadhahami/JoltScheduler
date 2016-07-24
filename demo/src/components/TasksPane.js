@@ -12,11 +12,12 @@ class TasksPane extends Component{
 		this.sched = new JoltScheduler();
 	}
 	handleSubmit(){
+		let that = this;
 		let msg = this.refs.msg.value;
 		let st = parseInt(this.refs.time.value,10);
 		let name = this.refs.name.value;
 		let cb = function(msg){
-			return this.props.callback.bind(msg);
+			return that.props.callback.bind(msg);
 		};
 		let task ={
 			name: name,
