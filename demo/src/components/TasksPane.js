@@ -18,7 +18,7 @@ class TasksPane extends Component{
 		let st = parseInt(this.refs.time.value,10);
 		let name = this.refs.name.value;
 		let cb = function(){
-			return that.props.callback(msg)
+			return that.props.callback(`Task '${name}' said: ${msg}`)
 		};
 		let date = new Date();
 		date.setSeconds(date.getSeconds() + st/1000);
@@ -28,6 +28,13 @@ class TasksPane extends Component{
 			callback:cb
 		};
 		this.sched.insert(task);
+		this._clearFields()
+	}
+	
+	_clearFields() {
+		this.refs.msg.value = '';
+		this.refs.time.value = '';
+		this.refs.name.value = '';
 	}
 	render(){
 		return (
