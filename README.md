@@ -7,6 +7,8 @@ The scheduler enables one to queue tasks for a certain time without being worrie
 1. Import scheduler
 ```javascript
 let JoltScheduler = require('./JoltScheduler/index')
+OR
+import JoltScheduler from './JoltScheduler/index'
 ```
 2. Create new JoltScheduler
 ```javascript
